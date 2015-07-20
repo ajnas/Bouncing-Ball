@@ -2,12 +2,55 @@
 var x=1;
 var y=1;
 
+var gravity=0.05;
+
 var ballWidth=50;
 var ballHeight=50;
 var xVelocity=1;
 var yVelocity=1;
+var xAcceleration=0;
+var yAcceleration=gravity;
 var ball;
 var width,height;
+
+window.addEventListener("keydown", applyForce, false);
+ 
+function applyForce(e) {
+    switch(e.keyCode) {
+        case 37:
+            xAcceleration=-0.1;
+            break;
+        case 38:
+        	yAcceleration-=0.1;            
+            break;
+        case 39:
+            xAcceleration=0.1;
+            break;
+        case 40:
+        	yAcceleration+=0.1;
+            break;  
+    }   
+}
+
+window.addEventListener("keyup", releaseForce, false);
+ 
+function releaseForce(e) {
+    switch(e.keyCode) {
+        case 37:
+            xAcceleration=0;
+            break;
+        case 38:
+        	yAcceleration=gravity;           
+            break;
+        case 39:
+            xAcceleration=0;
+            break;
+        case 40:
+        	yAcceleration=gravity;
+            break;  
+    }   
+}
+
 
 $(jQuery(document).ready(function($) {
 	
@@ -22,14 +65,15 @@ function render (){
 
 
 	 	console.log(x.toString(),y.toString());
-
+	 	xVelocity+=xAcceleration;
+	 	yVelocity+=yAcceleration;
 		x+=xVelocity;
 		y+=yVelocity;
 		if(isCollidedX())
-			xVelocity*=-1;
+			xVelocity*=-0.8;
 
 		if(isCollidedY())
-			yVelocity*=-1;
+			yVelocity*=-0.8;
 		$('#ball').css({
 			'top': y+"px",
 			'left': x+"px"
