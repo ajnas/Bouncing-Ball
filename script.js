@@ -15,7 +15,17 @@ var ball;
 var width,height;
 
 window.addEventListener("keydown", applyForce, false);
- 
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ window.addEventListener("devicemotion",motion,false);
+
+}
+
+function motion(){
+
+      xAcceleration=(-1*event.accelerationIncludingGravity.x)*0.5;
+      yAcceleration= event.accelerationIncludingGravity.y*0.5;
+ }
+
 function applyForce(e) {
     switch(e.keyCode) {
         case 37:
